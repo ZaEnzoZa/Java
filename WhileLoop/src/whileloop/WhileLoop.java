@@ -25,7 +25,7 @@ public class WhileLoop {
         int maxValue = scanInt.nextInt();
         System.out.println("Do you want the odd or even numbers from 0 to "+ maxValue +"?");
         String oddOrEven = scanString.nextLine();
-        System.out.println("The "+ oddOrEven +"numbers from 0 to "+ maxValue +" are:");
+        System.out.println("The "+ oddOrEven +" numbers from 0 to "+ maxValue +" are:");
         
         if (oddOrEven.equals("odd")) {
             nums = 1;
