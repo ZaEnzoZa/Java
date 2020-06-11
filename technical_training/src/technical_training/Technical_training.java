@@ -35,7 +35,8 @@ public class Technical_training {
     public static void main(String[] args) {
         Person neo = new Person("Neo", 15);
         Person kabo = new Person("Kabo", 6);
-        System.out.println(neo.fName + " is "+ neo.fAge +" years old");
+        System.out.println(neo.fName +" is "+ neo.fAge +" years old");
+        System.out.println(kabo.fName +" is "+ kabo.fAge +" years old");
     }
     
 }
