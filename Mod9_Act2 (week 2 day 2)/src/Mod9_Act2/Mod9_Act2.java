@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package test;
+package Mod9_Act2;
 
 /**
  *
@@ -25,7 +25,7 @@ class Car {
             System.out.println("Car is running...");
         }
     }
-public class Test {
+public class Mod9_Act2 {
     /**
      * @param args the command line arguments
      */   

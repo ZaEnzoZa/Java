@@ -26,11 +26,11 @@ public class SmallestNumber {
         int c = scan.nextInt();
         
         if (a < b && a < c) {
-            System.out.println("The largest number is: "+ a);
+            System.out.println("The smallest number is: "+ a);
         } else if (b < a && b < c) {
-            System.out.println("The largest number is: "+ b);
+            System.out.println("The smallest number is: "+ b);
         } else if (c < a && c < b) {
-            System.out.println("The smallest number is: "+ c);
+            System.out.println("The C smallest number is: "+ c);
         }
     }
     
