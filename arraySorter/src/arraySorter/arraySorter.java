@@ -9,7 +9,7 @@ package arraySorter;
  *
  * @author Enzo
  */
-public class arraySotrer {
+public class arraySorter {
 
     /**
      * @param args the command line arguments
