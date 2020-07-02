@@ -8,7 +8,7 @@ import java.sql.*;
  */
 public class FoosballDatabase {
 
-private static final String CREATE_TABLE_SQL="CREATE TABLE Test ("
+private static final String CREATE_TABLE_SQL="CREATE TABLE Player ("
                     + "PlayerID INT NOT NULL,"
                     + "Name VARCHAR(45) NOT NULL,"
                     + "Age INT NOT NULL,"
@@ -16,18 +16,23 @@ private static final String CREATE_TABLE_SQL="CREATE TABLE Test ("
                     + "PRIMARY KEY (PlayerID))";
 
     public static void main(String[] args) {
+        Connection conn = null;
         try {
-            Connection conn = DriverManager.getConnection(
-               "jdbc:mysql://localhost:3306/foosball?allowPublicKeyRetrieval=true&useSSL=false&serverTimezone=UTC",
-               "root", "Faders!41");  
+            conn = DriverManager.getConnection(
+               "jdbc:mysql://localhost:3306/foosball","root", "Faders!41");  
+             
             
-            Statement stmt = conn.createStatement(); 
+            //Create table
+//            stmt.executeUpdate(CREATE_TABLE_SQL);
+//            System.out.println("Table Created");
             
-            stmt.executeUpdate(CREATE_TABLE_SQL);
-            System.out.println("Table Created");
+            String strSelect ="INSERT INTO player (playerID, Name, Age, Matches) "
+                            + "VALUES ('5', 'Leigh Ausserhoffer', '19', '12')";
+            System.out.println("The SQL statement is: " + strSelect + "\n");
             
-//            String strSelect = "CREATE TABLE Player";
-//            System.out.println("The SQL statement is: " + strSelect + "\n");
+            Statement stmt = conn.createStatement();
+            stmt.executeUpdate(strSelect);
+            conn.close();
             
 //            ResultSet rset = stmt.executeUpdate(strSelect);  
              
