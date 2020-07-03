@@ -27,7 +27,7 @@ private static final String CREATE_TABLE_SQL="CREATE TABLE Player ("
 //            System.out.println("Table Created");
             
             String strSelect ="INSERT INTO player (playerID, Name, Age, Matches) "
-                            + "VALUES ('5', 'Leigh Ausserhoffer', '19', '12')";
+                            + "VALUES ('6', 'Michael Munnik', '20', '50')";
             System.out.println("The SQL statement is: " + strSelect + "\n");
             
             Statement stmt = conn.createStatement();
