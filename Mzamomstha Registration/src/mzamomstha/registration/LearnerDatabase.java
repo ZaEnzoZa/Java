@@ -31,13 +31,13 @@ public class LearnerDatabase extends javax.swing.JFrame {
             conn = DriverManager.getConnection(
                "jdbc:mysql://localhost:3306/mzamomtsha_registration","root", "root");
             
-        String query = "SELECT * FROM mzamomtsha_registration.learner;";
+        String query = "SELECT * FROM learner;";
         Statement stmnt = conn.createStatement();
         ResultSet rs = stmnt.executeQuery(query);
         MySQlToLearnerDatabase sqlConnection;
         
         while (rs.next()) {
-            sqlConnection = new MySQlToLearnerDatabase(rs.getInt("ID"), rs.getString("name"), rs.getString("surname"), rs.getString("gender"), rs.getString("DoB"), rs.getString("number"));
+            sqlConnection = new MySQlToLearnerDatabase(rs.getInt("ID"), rs.getString("Name"), rs.getString("Surname"), rs.getString("Gender"), rs.getString("Date_of_Birth"), rs.getString("Number"));
             learnersDatabase.add(sqlConnection);
         }
             
@@ -118,6 +118,7 @@ public class LearnerDatabase extends javax.swing.JFrame {
      */
     public LearnerDatabase() {
         initComponents();
+        learnerDatabase();
         showLearnersDatabase();
     }
 
@@ -132,10 +133,11 @@ public class LearnerDatabase extends javax.swing.JFrame {
 
         jScrollPane1 = new javax.swing.JScrollPane();
         tblLearnerDatabase = new javax.swing.JTable();
-        btnRefresh = new javax.swing.JButton();
         btnTeacher = new javax.swing.JButton();
         btnParent = new javax.swing.JButton();
         btnAddUserPage = new javax.swing.JButton();
+        btnSearch = new javax.swing.JButton();
+        btnSort = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Learner Database");
@@ -172,9 +174,6 @@ public class LearnerDatabase extends javax.swing.JFrame {
         tblLearnerDatabase.setToolTipText("To be implemented later");
         jScrollPane1.setViewportView(tblLearnerDatabase);
 
-        btnRefresh.setText("Refresh");
-        btnRefresh.setToolTipText("To be implemented later");
-
         btnTeacher.setText("Teacher Table");
         btnTeacher.setToolTipText("");
         btnTeacher.addActionListener(new java.awt.event.ActionListener() {
@@ -198,6 +197,10 @@ public class LearnerDatabase extends javax.swing.JFrame {
             }
         });
 
+        btnSearch.setText("jButton1");
+
+        btnSort.setText("jButton2");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -206,15 +209,17 @@ public class LearnerDatabase extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(btnAddUserPage)
-                        .addGap(68, 68, 68)
+                        .addComponent(btnSort)
+                        .addGap(98, 98, 98)
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addContainerGap(95, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(btnRefresh)
+                        .addComponent(btnSearch)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btnAddUserPage)
+                        .addGap(100, 100, 100)
                         .addComponent(btnParent)
-                        .addGap(129, 129, 129)
+                        .addGap(100, 100, 100)
                         .addComponent(btnTeacher)
                         .addGap(42, 42, 42))))
         );
@@ -223,13 +228,17 @@ public class LearnerDatabase extends javax.swing.JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnRefresh)
                     .addComponent(btnTeacher)
-                    .addComponent(btnParent))
-                .addGap(72, 72, 72)
+                    .addComponent(btnParent)
+                    .addComponent(btnSearch)
+                    .addComponent(btnAddUserPage))
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(btnAddUserPage)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 275, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(72, 72, 72)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 275, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(54, 54, 54)
+                        .addComponent(btnSort)))
                 .addContainerGap(14, Short.MAX_VALUE))
         );
 
@@ -298,7 +307,8 @@ public class LearnerDatabase extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAddUserPage;
     private javax.swing.JButton btnParent;
-    private javax.swing.JButton btnRefresh;
+    private javax.swing.JButton btnSearch;
+    private javax.swing.JButton btnSort;
     private javax.swing.JButton btnTeacher;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable tblLearnerDatabase;
