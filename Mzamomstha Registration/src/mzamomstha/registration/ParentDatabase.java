@@ -81,7 +81,6 @@ public class ParentDatabase extends javax.swing.JFrame {
 
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
-        btnRefresh = new javax.swing.JButton();
         btnLearner = new javax.swing.JButton();
         btnTeacher = new javax.swing.JButton();
         btnAddUserPage = new javax.swing.JButton();
@@ -120,9 +119,6 @@ public class ParentDatabase extends javax.swing.JFrame {
         jTable1.setToolTipText("To be implemented later");
         jScrollPane1.setViewportView(jTable1);
 
-        btnRefresh.setText("Refresh");
-        btnRefresh.setToolTipText("To be implemented later");
-
         btnLearner.setText("Learner Database");
         btnLearner.setToolTipText("");
         btnLearner.addActionListener(new java.awt.event.ActionListener() {
@@ -151,9 +147,7 @@ public class ParentDatabase extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(btnRefresh)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(btnTeacher)
                 .addGap(67, 67, 67)
                 .addComponent(btnLearner)
@@ -173,7 +167,6 @@ public class ParentDatabase extends javax.swing.JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnRefresh)
                     .addComponent(btnLearner)
                     .addComponent(btnTeacher))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 56, Short.MAX_VALUE)
@@ -247,7 +240,6 @@ public class ParentDatabase extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAddUserPage;
     private javax.swing.JButton btnLearner;
-    private javax.swing.JButton btnRefresh;
     private javax.swing.JButton btnTeacher;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTable1;

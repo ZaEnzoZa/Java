@@ -281,7 +281,6 @@ public class LearnerDatabase extends javax.swing.JFrame {
                 .addGap(13, 13, 13)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(18, 18, 18)
                         .addComponent(jScrollPane1)
                         .addContainerGap())
                     .addGroup(layout.createSequentialGroup()
@@ -315,7 +314,7 @@ public class LearnerDatabase extends javax.swing.JFrame {
                         .addComponent(jRadioButton2)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jRadioButton3)
-                        .addGap(45, 45, 45)
+                        .addGap(42, 42, 42)
                         .addComponent(btnSort)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
@@ -344,7 +343,7 @@ public class LearnerDatabase extends javax.swing.JFrame {
     }//GEN-LAST:event_btnTeacherActionPerformed
         
     private void btnAddUserPageActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddUserPageActionPerformed
-        openUserAddPage();
+            openUserAddPage();
     }//GEN-LAST:event_btnAddUserPageActionPerformed
 
     private void btnSortActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSortActionPerformed

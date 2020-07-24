@@ -88,7 +88,6 @@ public class TeacherDatabase extends javax.swing.JFrame {
 
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
-        btnRefresh = new javax.swing.JButton();
         btnLearner = new javax.swing.JButton();
         btnParent = new javax.swing.JButton();
         btnAddUserPage = new javax.swing.JButton();
@@ -127,9 +126,6 @@ public class TeacherDatabase extends javax.swing.JFrame {
         jTable1.setToolTipText("To be implemented later");
         jScrollPane1.setViewportView(jTable1);
 
-        btnRefresh.setText("Refresh");
-        btnRefresh.setToolTipText("To be implemented later");
-
         btnLearner.setText("Learner Database");
         btnLearner.setToolTipText("");
         btnLearner.addActionListener(new java.awt.event.ActionListener() {
@@ -158,16 +154,14 @@ public class TeacherDatabase extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addGap(9, 9, 9)
                         .addComponent(btnAddUserPage)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 581, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addContainerGap()
-                        .addComponent(btnRefresh)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(btnParent)
                         .addGap(143, 143, 143)
                         .addComponent(btnLearner)))
@@ -178,7 +172,6 @@ public class TeacherDatabase extends javax.swing.JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnRefresh)
                     .addComponent(btnLearner)
                     .addComponent(btnParent))
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -256,7 +249,6 @@ public class TeacherDatabase extends javax.swing.JFrame {
     private javax.swing.JButton btnAddUserPage;
     private javax.swing.JButton btnLearner;
     private javax.swing.JButton btnParent;
-    private javax.swing.JButton btnRefresh;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTable1;
     // End of variables declaration//GEN-END:variables

@@ -137,8 +137,8 @@ public class Login extends javax.swing.JFrame {
     private void btnLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLoginActionPerformed
         boolean parentLogin = false;
         boolean teacherLogin = false;
-        boolean adminLogin = false;
         boolean learnerLogin = false;
+        boolean adminLogin = false;
         String username = edtUsername.getText();
         String password = edtPassword.getText();
         
