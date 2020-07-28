@@ -75,7 +75,6 @@ public class MzamomsthaRegistration extends javax.swing.JFrame implements Runnab
             subjects.addItem("Drama");
             subjects.addItem("IT");
             
-            
             JRadioButton sixToNine = new JRadioButton();
             sixToNine.setText("6 - 9");
             
@@ -88,33 +87,25 @@ public class MzamomsthaRegistration extends javax.swing.JFrame implements Runnab
             JButton buttonSort = new JButton();
             buttonSort.setText("Sort");
             
-            int n = JOptionPane.showConfirmDialog(
-            frame,
-            "Do you want to set a background for the Database Panel?",
-            "Background",
-            JOptionPane.YES_NO_OPTION);
-            
-            JFileChooser chooser = new JFileChooser();
-            chooser.showOpenDialog(null);
-            File f = chooser.getSelectedFile();
-            String filePath = f.getAbsolutePath();
-            JOptionPane.showMessageDialog(null, "The path you selected was: "+ filePath);
-            JOptionPane.showMessageDialog(null, "The Backround function will be implemented at a later stage");
-            
-//            JLabel image = new JLabel("", new ImageIcon(filePath), JLabel.CENTER);
-//            image.setPreferredSize(new Dimension(900, 400));
-//            add(image, BorderLayout.CENTER);
-//            revalidate(); 
-//            repaint();  
+//            int n = JOptionPane.showConfirmDialog(
+//            frame,
+//            "Do you want to set a background for the Database Panel?",
+//            "Background",
+//            JOptionPane.YES_NO_OPTION);
+//            
+//            JFileChooser chooser = new JFileChooser();
+//            chooser.showOpenDialog(null);
+//            File f = chooser.getSelectedFile();
+//            String filePath = f.getAbsolutePath();
+//            JOptionPane.showMessageDialog(null, "The path you selected was: "+ filePath);
+//            JOptionPane.showMessageDialog(null, "The Backround function will be implemented at a later stage");
 
             
             setPreferredSize(new Dimension(1000, 500));
             setLayout(mainPanelLayout);
-//            add(image);
             add(leftPanel);
             add(centerPanel);
-//            image.add(leftPanel);
-//            image.add(centerPanel);
+
             centerPanel.add(topPanel);
             topPanel.add(teacherLabel);
             centerPanel.add(buttonPanel);
@@ -132,7 +123,7 @@ public class MzamomsthaRegistration extends javax.swing.JFrame implements Runnab
             leftPanel.add(fifteenToSeventeen);
             leftPanel.add(buttonSort);
             setVisible(true);
-            //pack();
+            pack();
             
             learnerButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -343,7 +334,7 @@ public class MzamomsthaRegistration extends javax.swing.JFrame implements Runnab
             JButton buttonSort = new JButton();
             buttonSort.setText("Sort");
             
-            setPreferredSize(new Dimension(1000, 500));
+            setPreferredSize(new Dimension(500, 500));
             setLayout(mainPanelLayout);
             add(leftPanel);
             add(centerPanel);
@@ -402,17 +393,15 @@ public class MzamomsthaRegistration extends javax.swing.JFrame implements Runnab
     
     public class AddUserPage extends JPanel {
         public AddUserPage() {
-            JPanel mainPanel = new JPanel();
             SpringLayout layout = new SpringLayout();
-            mainPanel.setLayout(layout);
             
-//            JPanel centerPanel = new JPanel();
-//            BoxLayout centerPanelBoxLayout = new BoxLayout(centerPanel, BoxLayout.Y_AXIS);
-//            centerPanel.setLayout(centerPanelBoxLayout);
-//            
 //            JPanel rightPanel = new JPanel();
 //            BoxLayout rightPanelBoxLayout = new BoxLayout(rightPanel, BoxLayout.Y_AXIS);
 //            rightPanel.setLayout(rightPanelBoxLayout);
+//            
+//            JPanel leftPanel = new JPanel();
+//            BoxLayout leftPanelBoxLayout = new BoxLayout(leftPanel, BoxLayout.Y_AXIS);
+//            leftPanel.setLayout(leftPanelBoxLayout);
             
             JTextField edtID = new JTextField("");
             JTextField edtName = new JTextField("");
@@ -426,60 +415,102 @@ public class MzamomsthaRegistration extends javax.swing.JFrame implements Runnab
             JLabel lblID = new JLabel();
             lblID.setText("ID:");
             JLabel lblName = new JLabel();
-            lblID.setText("Name:");
+            lblName.setText("Name:");
             JLabel lblSurname = new JLabel();
-            lblID.setText("Surname:");
+            lblSurname.setText("Surname:");
             JLabel lblGender = new JLabel();
-            lblID.setText("Gender:");
+            lblGender.setText("Gender:");
             JLabel lblDoB = new JLabel();
-            lblID.setText("Date of Birth:");
+            lblDoB.setText("Date of Birth:");
             JLabel lblNumber = new JLabel();
-            lblID.setText("Cell Phone Number:");
-            JLabel lblIDChildID = new JLabel();
-            lblID.setText("Child ID:");
+            lblNumber.setText("Cell Phone Number:");
+            JLabel lblChildID = new JLabel();
+            lblChildID.setText("Child ID:");
             JLabel lblEmail = new JLabel();
-            lblID.setText("Email Address:");
+            lblEmail.setText("Email Address:");
             
             JButton addUser = new JButton();
             addUser.setText("Add User");
             
+            JButton deleteUser = new JButton();
+            deleteUser.setText("Delete User");
             
-//            layout.putConstraint(SpringLayout.WEST, lblID, 5, SpringLayout.WEST, this);
-//            layout.putConstraint(SpringLayout.NORTH, lblID, 5, SpringLayout.NORTH, this);
+//            layout.putConstraint(SpringLayout.EAST, this, 5, SpringLayout.EAST, edtEmail);
             
+            layout.putConstraint(SpringLayout.WEST, lblID, 5, SpringLayout.WEST, this);
+            layout.putConstraint(SpringLayout.NORTH, lblID, 5, SpringLayout.NORTH, this);
+            layout.putConstraint(SpringLayout.WEST, edtID, 5, SpringLayout.EAST, lblID);
+            layout.putConstraint(SpringLayout.NORTH, edtID, 5, SpringLayout.NORTH, this);
             
-            setPreferredSize(new Dimension(500, 500));
-            add(mainPanel);
+            layout.putConstraint(SpringLayout.WEST, lblName, 5, SpringLayout.WEST, this);
+            layout.putConstraint(SpringLayout.NORTH, lblName, 5, SpringLayout.SOUTH, lblID);
+            layout.putConstraint(SpringLayout.WEST, edtName, 5, SpringLayout.EAST, lblName);
+            layout.putConstraint(SpringLayout.NORTH, edtName, 5, SpringLayout.SOUTH, edtID);
+            
+            layout.putConstraint(SpringLayout.WEST, lblSurname, 5, SpringLayout.WEST, this);
+            layout.putConstraint(SpringLayout.NORTH, lblSurname, 5, SpringLayout.SOUTH, lblName);
+            layout.putConstraint(SpringLayout.WEST, edtSurname, 5, SpringLayout.EAST, lblSurname);
+            layout.putConstraint(SpringLayout.NORTH, edtSurname, 5, SpringLayout.SOUTH, edtName);
+            
+            layout.putConstraint(SpringLayout.WEST, lblGender, 5, SpringLayout.WEST, this);
+            layout.putConstraint(SpringLayout.NORTH, lblGender, 5, SpringLayout.SOUTH, lblSurname);
+            layout.putConstraint(SpringLayout.WEST, edtGender, 5, SpringLayout.EAST, lblGender);
+            layout.putConstraint(SpringLayout.NORTH, edtGender, 5, SpringLayout.SOUTH, edtSurname);
+            
+            layout.putConstraint(SpringLayout.WEST, lblDoB, 5, SpringLayout.WEST, this);
+            layout.putConstraint(SpringLayout.NORTH, lblDoB, 5, SpringLayout.SOUTH, lblGender);
+            layout.putConstraint(SpringLayout.WEST, edtDoB, 5, SpringLayout.EAST, lblDoB);
+            layout.putConstraint(SpringLayout.NORTH, edtDoB, 5, SpringLayout.SOUTH, edtGender);
+            
+            layout.putConstraint(SpringLayout.WEST, lblNumber, 5, SpringLayout.WEST, this);
+            layout.putConstraint(SpringLayout.NORTH, lblNumber, 5, SpringLayout.SOUTH, lblDoB);
+            layout.putConstraint(SpringLayout.WEST, edtNumber, 5, SpringLayout.EAST, lblNumber);
+            layout.putConstraint(SpringLayout.NORTH, edtNumber, 5, SpringLayout.SOUTH, edtDoB);
+            
+            layout.putConstraint(SpringLayout.WEST, lblChildID, 5, SpringLayout.WEST, this);
+            layout.putConstraint(SpringLayout.NORTH, lblChildID, 5, SpringLayout.SOUTH, lblNumber);
+            layout.putConstraint(SpringLayout.WEST, edtChildID, 5, SpringLayout.EAST, lblChildID);
+            layout.putConstraint(SpringLayout.NORTH, edtChildID, 5, SpringLayout.SOUTH, edtNumber);
+            
+            layout.putConstraint(SpringLayout.WEST, lblEmail, 5, SpringLayout.WEST, this);
+            layout.putConstraint(SpringLayout.NORTH, lblEmail, 5, SpringLayout.SOUTH, lblChildID);
+            layout.putConstraint(SpringLayout.WEST, edtEmail, 5, SpringLayout.EAST, lblEmail);
+            layout.putConstraint(SpringLayout.NORTH, edtEmail, 5, SpringLayout.SOUTH, edtChildID);
+            
+            setPreferredSize(new Dimension(1000, 300));
+            setLayout(layout);
+            add(lblID);
+            add(edtID);
+            add(lblName);
+            add(edtName);
+            add(lblSurname);
+            add(edtSurname);
+            add(lblGender);
+            add(edtGender);
+            add(lblDoB);
+            add(edtDoB);
+            add(lblNumber);
+            add(edtNumber);
+            add(lblChildID);
+            add(edtChildID);
+            add(lblEmail);
+            add(edtEmail);
+            pack();
             setVisible(true);
-//            add(leftPanel);
-//            add(centerPanel);
-//            add(rightPanel);
-//            leftPanel.add(new JLabel("ID:"));
-//            rightPanel.add(edtID);
-//            leftPanel.add(new JLabel("Name:"));
-//            rightPanel.add(edtName);
-//            leftPanel.add(new JLabel("Surname:"));
-//            rightPanel.add(edtSurname);
-//            leftPanel.add(new JLabel("Gender:"));
-//            rightPanel.add(edtGender);
-//            leftPanel.add(new JLabel("Date of Birth:"));
-//            rightPanel.add(edtDoB);
-//            leftPanel.add(new JLabel("Cell Phone Number:"));
-//            rightPanel.add(edtNumber);
-//            leftPanel.add(new JLabel("Child ID:"));
-//            rightPanel.add(edtChildID);
-//            leftPanel.add(new JLabel("Email Address:"));
-//            rightPanel.add(edtEmail);
-//            
-//            centerPanel.add(addUser);
+            
         
         }
     }
     
     public class UnknownDb extends JPanel {
         public UnknownDb() {
-            setPreferredSize(new Dimension(500, 500));
+            setPreferredSize(new Dimension(1000, 500));
         }
+    }
+
+    public MzamomsthaRegistration(JFrame frame, JPanel databasesPanel) throws HeadlessException {
+        this.frame = frame;
+        this.databasesPanel = databasesPanel;
     }
     
     
@@ -561,11 +592,6 @@ public class MzamomsthaRegistration extends javax.swing.JFrame implements Runnab
         
         
         if (loginLearner) {
-//            n = JOptionPane.showConfirmDialog(
-//            frame,
-//            "Do you want to set a background for the Database Panel?",
-//            "Background",
-//            JOptionPane.YES_NO_OPTION);
             layout.show(databasesPanel, "learner");
             updateLearnerTable();
         } else if (loginTeacher) {
