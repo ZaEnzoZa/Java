@@ -87,6 +87,7 @@ public class MzamomsthaRegistration extends javax.swing.JFrame implements Runnab
             JButton buttonSort = new JButton();
             buttonSort.setText("Sort");
             
+            
 //            int n = JOptionPane.showConfirmDialog(
 //            frame,
 //            "Do you want to set a background for the Database Panel?",
@@ -98,6 +99,10 @@ public class MzamomsthaRegistration extends javax.swing.JFrame implements Runnab
 //            File f = chooser.getSelectedFile();
 //            String filePath = f.getAbsolutePath();
 //            JOptionPane.showMessageDialog(null, "The path you selected was: "+ filePath);
+//            JLabel image = new JLabel("", new ImageIcon(filePath), JLabel.CENTER);
+//            image.setPreferredSize(new Dimension(900, 400));
+
+  
 //            JOptionPane.showMessageDialog(null, "The Backround function will be implemented at a later stage");
 
             
@@ -122,6 +127,9 @@ public class MzamomsthaRegistration extends javax.swing.JFrame implements Runnab
             leftPanel.add(tenToFourteen);
             leftPanel.add(fifteenToSeventeen);
             leftPanel.add(buttonSort);
+//            add(image, BorderLayout.CENTER);
+//            revalidate(); 
+//            repaint();
             setVisible(true);
             pack();
             
@@ -700,10 +708,13 @@ public class MzamomsthaRegistration extends javax.swing.JFrame implements Runnab
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jPanel1 = new javax.swing.JPanel();
+
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setMinimumSize(new java.awt.Dimension(1000, 1000));
         setResizable(false);
         getContentPane().setLayout(new javax.swing.BoxLayout(getContentPane(), javax.swing.BoxLayout.LINE_AXIS));
+        getContentPane().add(jPanel1);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -740,5 +751,6 @@ public class MzamomsthaRegistration extends javax.swing.JFrame implements Runnab
         
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JPanel jPanel1;
     // End of variables declaration//GEN-END:variables
 }
