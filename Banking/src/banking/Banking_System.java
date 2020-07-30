@@ -38,6 +38,7 @@ public class Banking_System extends javax.swing.JFrame {
         String userName = "";
         String password = "";
     }
+    public float currBalance = 0;
     
 //    Creates the Login Dialog
     public class LoginDlg extends JDialog implements ActionListener {
@@ -137,12 +138,22 @@ public class Banking_System extends javax.swing.JFrame {
         jScrollPane1.setViewportView(txaOutput);
 
         btnWithdraw.setText("Withdraw");
+        btnWithdraw.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnWithdrawActionPerformed(evt);
+            }
+        });
 
         jLabel1.setText("How much would you like to Withdraw?");
 
         jLabel2.setText("How much would you like to deposit?");
 
         btnDeposit.setText("Deposit");
+        btnDeposit.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnDepositActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -151,6 +162,7 @@ public class Banking_System extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 624, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel1)
                         .addGap(18, 18, 18)
@@ -161,9 +173,8 @@ public class Banking_System extends javax.swing.JFrame {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(btnWithdraw, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(btnDeposit, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                    .addComponent(jLabel2)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 394, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(jLabel2))
+                .addContainerGap(295, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -172,7 +183,7 @@ public class Banking_System extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
                     .addComponent(edtWithdraw, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnWithdraw, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(btnWithdraw, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
@@ -184,8 +195,17 @@ public class Banking_System extends javax.swing.JFrame {
         );
 
         pack();
-        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
+
+    private void btnWithdrawActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnWithdrawActionPerformed
+
+        displayBal(withdraw(currBalance, Float.parseFloat(edtWithdraw.getText())));
+    }//GEN-LAST:event_btnWithdrawActionPerformed
+
+    private void btnDepositActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDepositActionPerformed
+
+        displayBal(deposit(currBalance, Float.parseFloat(edtDeposit.getText())));
+    }//GEN-LAST:event_btnDepositActionPerformed
 
     /**
      * @param args the command line arguments
@@ -220,6 +240,40 @@ public class Banking_System extends javax.swing.JFrame {
                 new Banking_System().setVisible(true);
             }
         });
+    }
+    
+    public float withdraw(float curBalance, float withdrawAmount){
+
+        float newBalance = 0;
+        float bankCosts = 0;
+        float counter = Math.floorDiv((long)withdrawAmount,100);
+        
+        bankCosts = (float) (2.02 * counter);
+        
+        newBalance = curBalance - withdrawAmount - bankCosts;
+        
+        newBalance = (float) (Math.round(newBalance * 100.0) / 100.0);
+        currBalance = newBalance;
+        return newBalance;
+    }
+    
+    public float deposit(float curBalance, float depositAmount){
+
+        float newBalance = 0;
+        float bankCosts = 0;
+        float counter = Math.floorDiv((long)depositAmount,100);
+        
+        bankCosts = (float) (1.82 * counter);
+        
+        newBalance = curBalance + depositAmount - bankCosts;
+        
+        newBalance = (float) (Math.round(newBalance * 100.0) / 100.0);
+        currBalance = newBalance;
+        return newBalance;
+    }
+    
+    public void displayBal(float bal){
+        txaOutput.setText("Current Balance is: R" + String.valueOf(bal));
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
