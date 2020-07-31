@@ -139,12 +139,22 @@ public class Banking_System extends javax.swing.JFrame {
         jScrollPane1.setViewportView(txaOutput);
 
         btnWithdraw.setText("Withdraw");
+        btnWithdraw.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnWithdrawActionPerformed(evt);
+            }
+        });
 
         jLabel1.setText("How much would you like to Withdraw?");
 
         jLabel2.setText("How much would you like to deposit?");
 
         btnDeposit.setText("Deposit");
+        btnDeposit.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnDepositActionPerformed(evt);
+            }
+        });
 
         jButton1.setText("(temp) Calculator");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
