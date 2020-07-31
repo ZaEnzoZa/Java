@@ -32,6 +32,7 @@ public class Banking_System extends javax.swing.JFrame {
     public Banking_System() {
         initComponents();
         showLoginDlg();
+        displayBal(currBalance);
     }
     
     private void showLoginDlg() {
@@ -64,7 +65,7 @@ public class Banking_System extends javax.swing.JFrame {
         
         
     }
-    public float currBalance = 0;
+    public float currBalance = 1000;
     
 //    Creates the Login Dialog
     public class LoginDlg extends JDialog implements ActionListener {
@@ -182,7 +183,7 @@ public class Banking_System extends javax.swing.JFrame {
             }
         });
 
-        jButton1.setText("(temp) Calculator");
+        jButton1.setText("Calculator");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton1ActionPerformed(evt);
@@ -245,7 +246,8 @@ public class Banking_System extends javax.swing.JFrame {
     }//GEN-LAST:event_btnDepositActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        dispose();
+        // setVisible(false);
+        //dispose();
         new Financial_calculator().setVisible(true);
     }//GEN-LAST:event_jButton1ActionPerformed
 
@@ -286,8 +288,6 @@ public class Banking_System extends javax.swing.JFrame {
     
     public float withdraw(float curBalance, float withdrawAmount){
         
-//        String startingBal = edtStartingBal.getText();
-//        float newBalance = Float.parseFloat(startingBal);
         float newBalance = 0;
         float bankCosts = 0;
         float counter = Math.floorDiv((long)withdrawAmount,100);
