@@ -30,6 +30,7 @@ public class Banking_System extends javax.swing.JFrame {
      */
     public Banking_System() {
         initComponents();
+        displayBal(currBalance);
         showLoginDlg();
     }
     
