@@ -31,115 +31,9 @@ public class Banking_System extends javax.swing.JFrame {
      */
     public Banking_System() {
         initComponents();
-        showLoginDlg();
+        displayBal(currBalance);
     }
-    
-    private void showLoginDlg() {
-        LoginDlg loginDlg = new LoginDlg(this);
-        Boolean michaelLogin = false;
-        Boolean alexLogin = false;
-        Boolean aidanLogin = false;
-        Boolean zikhonaLogin = false;
-        Boolean commonLogin = false;
-        
-        if (loginDlg.getEdtUsername().equals("Michael") && loginDlg.getEdtPassword().equals("MichaelPassword")) {
-            michaelLogin = true;
-            commonLogin = true;
-        } else if (loginDlg.getEdtUsername().equals("Alex") && loginDlg.getEdtPassword().equals("AlexPassword")) {
-            alexLogin = true;
-            commonLogin = true;
-        } else if (loginDlg.getEdtUsername().equals("Aidan") && loginDlg.getEdtPassword().equals("AidanPassword")) {
-            aidanLogin = true;
-            commonLogin = true;
-        } else if (loginDlg.getEdtUsername().equals("Zikhona") && loginDlg.getEdtPassword().equals("ZikhonaPassword")) {
-            zikhonaLogin = true;
-            commonLogin = true;
-        }
-        
-        if (commonLogin == false) {
-            JOptionPane.showMessageDialog(null, "Incorrect Username or Password");
-            System.exit(0);
-            
-        }
-        
-        
-    }
-    public float currBalance = 0;
-    
-//    Creates the Login Dialog
-    public class LoginDlg extends JDialog implements ActionListener {
-    private JPasswordField  edtPassword;
-    private JTextField  edtUsername;
-
-    public LoginDlg(JFrame owner) {
-        super(owner, "Login", true);
-        setDefaultCloseOperation(DISPOSE_ON_CLOSE);
-        add(createLoginPanel(), BorderLayout.CENTER);
-        add(createButtonsPanel(), BorderLayout.PAGE_END);
-        pack();
-        setLocationRelativeTo(owner);
-        setVisible(true);
-    }
-
-    public void actionPerformed(ActionEvent event) {
-        dispose();
-    }
-
-    public String getEdtUsername() {
-        return edtUsername.getText();
-    }
-    
-    public String getEdtPassword() {
-        return edtPassword.getText();
-    }
-
-    private JPanel createButtonsPanel() {
-        JPanel buttonsPanel = new JPanel();
-        JButton button = new JButton("Login");
-        button.addActionListener(this);
-        buttonsPanel.add(button);
-        return buttonsPanel;
-    }
-
-    private JPanel createLoginPanel() {
-        JPanel loginPanel = new JPanel(new GridBagLayout());
-        GridBagConstraints gbc = new GridBagConstraints();
-        gbc.anchor = GridBagConstraints.LINE_START;
-        gbc.gridx = 0;
-        gbc.gridy = 0;
-        gbc.insets.bottom = 5;
-        gbc.insets.left = 20;
-        gbc.insets.right = 5;
-        gbc.insets.top = 20;
-        JLabel usrLabel = new JLabel("Username:");
-        loginPanel.add(usrLabel, gbc);
-
-        gbc.gridx = 1;
-        gbc.insets.left = 5;
-        gbc.insets.right = 20;
-        edtUsername = new JTextField(15);
-        loginPanel.add(edtUsername, gbc);
-
-        gbc.gridx = 0;
-        gbc.gridy = 1;
-        gbc.insets.bottom = 20;
-        gbc.insets.left = 20;
-        gbc.insets.right = 5;
-        gbc.insets.top = 5;
-        JLabel pwLabel = new JLabel("Password");
-        loginPanel.add(pwLabel, gbc);
-
-        gbc.gridx = 1;
-        gbc.insets.left = 5;
-        gbc.insets.right = 20;
-        edtPassword = new JPasswordField(15);
-        loginPanel.add(edtPassword, gbc);
-        return loginPanel;
-    }
-}
-//   End of Login Dialog
-    
-    
+    public float currBalance = 1000;
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -150,30 +44,33 @@ public class Banking_System extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jScrollPane1 = new javax.swing.JScrollPane();
-        txaOutput = new javax.swing.JTextPane();
-        btnWithdraw = new javax.swing.JButton();
+        jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         edtWithdraw = new javax.swing.JTextField();
         edtDeposit = new javax.swing.JTextField();
         btnDeposit = new javax.swing.JButton();
         jButton1 = new javax.swing.JButton();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        txaOutput = new javax.swing.JTextPane();
+        btnWithdraw = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jScrollPane1.setViewportView(txaOutput);
+        jPanel1.setBackground(new java.awt.Color(51, 51, 51));
+        jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        btnWithdraw.setText("Withdraw");
-        btnWithdraw.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnWithdrawActionPerformed(evt);
-            }
-        });
-
+        jLabel1.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        jLabel1.setForeground(new java.awt.Color(255, 255, 255));
         jLabel1.setText("How much would you like to Withdraw?");
+        jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 20, -1, -1));
 
+        jLabel2.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        jLabel2.setForeground(new java.awt.Color(255, 255, 255));
         jLabel2.setText("How much would you like to deposit?");
+        jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 60, -1, -1));
+        jPanel1.add(edtWithdraw, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 20, 70, -1));
+        jPanel1.add(edtDeposit, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 60, 70, -1));
 
         btnDeposit.setText("Deposit");
         btnDeposit.addActionListener(new java.awt.event.ActionListener() {
@@ -181,113 +78,58 @@ public class Banking_System extends javax.swing.JFrame {
                 btnDepositActionPerformed(evt);
             }
         });
+        jPanel1.add(btnDeposit, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 60, 79, -1));
 
-        jButton1.setText("(temp) Calculator");
+        jButton1.setText("Calculator");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton1ActionPerformed(evt);
             }
         });
+        jPanel1.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 40, 115, -1));
+
+        jScrollPane1.setViewportView(txaOutput);
+
+        jPanel1.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 90, 550, 120));
+
+        btnWithdraw.setText("Withdraw");
+        btnWithdraw.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnWithdrawActionPerformed(evt);
+            }
+        });
+        jPanel1.add(btnWithdraw, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 20, -1, -1));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel1)
-                            .addComponent(jLabel2))
-                        .addGap(18, 18, 18)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(edtWithdraw, javax.swing.GroupLayout.DEFAULT_SIZE, 58, Short.MAX_VALUE)
-                            .addComponent(edtDeposit))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(btnWithdraw, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(btnDeposit, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap())
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 565, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
-                    .addComponent(btnWithdraw, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel1)
-                    .addComponent(edtWithdraw, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
-                    .addComponent(jLabel2)
-                    .addComponent(edtDeposit, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnDeposit)
-                    .addComponent(jButton1))
-                .addGap(21, 21, 21)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 115, Short.MAX_VALUE)
-                .addContainerGap())
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 219, Short.MAX_VALUE)
         );
 
         pack();
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        new Financial_calculator().setVisible(true);
+        dispose();
+    }//GEN-LAST:event_jButton1ActionPerformed
+
     private void btnWithdrawActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnWithdrawActionPerformed
-    displayBal(withdraw(currBalance, Float.parseFloat(edtWithdraw.getText())));
+        displayBal(withdraw(currBalance, Float.parseFloat(edtWithdraw.getText())));
     }//GEN-LAST:event_btnWithdrawActionPerformed
 
     private void btnDepositActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDepositActionPerformed
-    displayBal(deposit(currBalance, Float.parseFloat(edtDeposit.getText())));
+        displayBal(deposit(currBalance, Float.parseFloat(edtDeposit.getText())));
     }//GEN-LAST:event_btnDepositActionPerformed
-
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        dispose();
-        new Financial_calculator().setVisible(true);
-    }//GEN-LAST:event_jButton1ActionPerformed
-
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(Banking_System.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(Banking_System.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(Banking_System.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(Banking_System.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new Banking_System().setVisible(true);
-            }
-        });
-    }
     
     public float withdraw(float curBalance, float withdrawAmount){
         
-//        String startingBal = edtStartingBal.getText();
-//        float newBalance = Float.parseFloat(startingBal);
         float newBalance = 0;
         float bankCosts = 0;
         float counter = Math.floorDiv((long)withdrawAmount,100);
@@ -319,6 +161,9 @@ public class Banking_System extends javax.swing.JFrame {
     public void displayBal(float bal){
         txaOutput.setText("Current Balance is: R" + String.valueOf(bal));
     }
+    public void RedisplaySelf(){
+        setVisible(true);
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnDeposit;
@@ -328,6 +173,7 @@ public class Banking_System extends javax.swing.JFrame {
     private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTextPane txaOutput;
     // End of variables declaration//GEN-END:variables
