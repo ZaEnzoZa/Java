@@ -38,7 +38,7 @@ public class Banking_System extends javax.swing.JFrame {
         String userName = "";
         String password = "";
     }
-    public float currBalance = 0;
+    public float currBalance = 1000;
     
 //    Creates the Login Dialog
     public class LoginDlg extends JDialog implements ActionListener {
