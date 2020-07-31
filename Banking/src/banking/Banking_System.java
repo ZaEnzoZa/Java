@@ -286,8 +286,6 @@ public class Banking_System extends javax.swing.JFrame {
     
     public float withdraw(float curBalance, float withdrawAmount){
         
-//        String startingBal = edtStartingBal.getText();
-//        float newBalance = Float.parseFloat(startingBal);
         float newBalance = 0;
         float bankCosts = 0;
         float counter = Math.floorDiv((long)withdrawAmount,100);
