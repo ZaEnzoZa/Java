@@ -32,6 +32,7 @@ public class Banking_System extends javax.swing.JFrame {
     public Banking_System() {
         initComponents();
         showLoginDlg();
+        displayBal(currBalance);
     }
     
     private void showLoginDlg() {
@@ -64,7 +65,7 @@ public class Banking_System extends javax.swing.JFrame {
         
         
     }
-    public float currBalance = 0;
+    public float currBalance = 1000;
     
 //    Creates the Login Dialog
     public class LoginDlg extends JDialog implements ActionListener {
