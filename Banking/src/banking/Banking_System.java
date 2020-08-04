@@ -10,6 +10,13 @@ import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
@@ -26,14 +33,21 @@ import static javax.swing.WindowConstants.DISPOSE_ON_CLOSE;
  */
 public class Banking_System extends javax.swing.JFrame {
 
-    /**
-     * Creates new form Banking_System
-     */
+    Connection conn = null;
+    ResultSet rs = null;
+    PreparedStatement ps = null;
+    
     public Banking_System() {
         initComponents();
+        try {
+            conn = DriverManager.getConnection(
+               "jdbc:mysql://localhost:3306/banking_system","root", "root");
+        } catch (SQLException e) {
+        }
         displayBal(currBalance);
     }
-    public float currBalance = 1000;
+    
+    public float currBalance;
 
     /**
      * This method is called from within the constructor to initialize the form.

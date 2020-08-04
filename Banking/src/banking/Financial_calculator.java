@@ -3,6 +3,11 @@ package banking;
 import java.awt.Color;
 import javax.swing.JOptionPane;
 import banking.Banking_System;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 
 /**
  *
@@ -10,9 +15,17 @@ import banking.Banking_System;
  */
 public class Financial_calculator extends javax.swing.JFrame {
 
+    Connection conn = null;
+    ResultSet rs = null;
+    PreparedStatement ps = null;
+    
     public Financial_calculator() {
         initComponents();
-
+        try {
+            Connection conn = DriverManager.getConnection(
+               "jdbc:mysql://localhost:3306/banking_system","root", "root");
+        } catch (SQLException e) {
+        }    
         rFinalAmt.setSelected(true);
         edtFinalAmt.setText("");
         edtFinalAmt.setEnabled(false);
