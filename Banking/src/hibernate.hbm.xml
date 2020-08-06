@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<hibernate-mapping>
+    <class name = "banking.User" table = "users">
+      
+        <meta attribute = "class-description">
+            This class contains the user details. 
+        </meta>
+      
+        <id name = "id" type = "int" column = "id">
+            <generator class="native"/>
+        </id>
+      
+        <property name = "name" column = "Name" type = "string"/>
+        <property name = "surname" column = "Surname" type = "string"/>
+        <property name = "number" column = "Number" type = "string"/>
+        <property name = "username" column = "Username" type = "string"/>
+        <property name = "password" column = "Password" type = "string"/>
+        <property name = "balance" column = "Balance" type = "int"/>
+            
+    </class>
+</hibernate-mapping>
