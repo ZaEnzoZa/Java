@@ -38,7 +38,7 @@ public class Banking_System extends javax.swing.JFrame {
         displayBal(Float.parseFloat(UserDetials[5]));
     }
 
-    public float currBalance;
+    public float currBalance = (Float.parseFloat(UserDetials[5]));
 
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
