@@ -29,6 +29,10 @@ public class Banking_System extends javax.swing.JFrame {
     Connection conn = null;
     ResultSet rs = null;
     PreparedStatement ps = null;
+    String jdbcDriver = "com.mysql.jdbc.Driver";
+    String dbLink = "jdbc:mysql://localhost/banking?autoReconnect=true&useSSL=false";
+    String dbUname = "root";
+    String dbPswd = "root";
     String[] UserDetials = getUserDetails();
 
     public Banking_System() {
@@ -57,6 +61,7 @@ public class Banking_System extends javax.swing.JFrame {
         jButton2 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setUndecorated(true);
 
         jPanel1.setBackground(new java.awt.Color(51, 51, 51));
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -141,6 +146,7 @@ public class Banking_System extends javax.swing.JFrame {
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         updateUserDetails();
         clearTfile();
+
         new Login_page().setVisible(true);
         dispose();
     }//GEN-LAST:event_jButton2ActionPerformed
@@ -160,24 +166,6 @@ public class Banking_System extends javax.swing.JFrame {
         return newBalance;
     }
 
-    public void clearTfile(){
-        FileWriter writer = null;
-        try {
-            File myFile = new File("User.txt");
-            writer = new FileWriter(myFile);
-            writer.write("");
-            writer.close();
-        } catch (IOException ex) {
-            Logger.getLogger(Banking_System.class.getName()).log(Level.SEVERE, null, ex);
-        } finally {
-            try {
-                writer.close();
-            } catch (IOException ex) {
-                Logger.getLogger(Banking_System.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        }
-    }
-    
     public float deposit(float curBalance, float depositAmount) {
 
         float newBalance = 0;
@@ -210,6 +198,7 @@ public class Banking_System extends javax.swing.JFrame {
             while (myReader.hasNextLine()) {
                 String info = myReader.nextLine();
                 allInfo = info.split(",");
+                currBalance = Float.parseFloat(allInfo[5]);
             }
         } catch (FileNotFoundException ex) {
             JOptionPane.showMessageDialog(null, "Failed to obtain user details");
@@ -221,15 +210,33 @@ public class Banking_System extends javax.swing.JFrame {
         try {
             Connection con;
             Statement stmt;
-            Class.forName("com.mysql.jdbc.Driver");
-            con = DriverManager.getConnection("jdbc:mysql://localhost/banking_system", "root", "root");
+            Class.forName(jdbcDriver);
+            con = DriverManager.getConnection(dbLink, dbUname, dbPswd);
             stmt = con.createStatement();
-            
-            String query = "UPDATE users SET Balance = '" + currBalance + "'" + 
-                    "WHERE id = '" + UserDetials[0] + "'";
+
+            String query = "UPDATE users SET Balance = '" + currBalance + "'"
+                    + "WHERE id = '" + UserDetials[0] + "'";
             stmt.executeUpdate(query);
         } catch (ClassNotFoundException | SQLException e) {
             JOptionPane.showMessageDialog(null, "Failed to update user details on close");
+        }
+    }
+
+    public void clearTfile() {
+        FileWriter writer = null;
+        try {
+            File myFile = new File("User.txt");
+            writer = new FileWriter(myFile);
+            writer.write("");
+            writer.close();
+        } catch (IOException ex) {
+            Logger.getLogger(Banking_System.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            try {
+                writer.close();
+            } catch (IOException ex) {
+                Logger.getLogger(Banking_System.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables

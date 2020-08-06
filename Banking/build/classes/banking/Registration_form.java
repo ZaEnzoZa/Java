@@ -53,6 +53,7 @@ public class Registration_form extends javax.swing.JFrame {
         jRadioButton3 = new javax.swing.JRadioButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setUndecorated(true);
 
         jPanel1.setBackground(new java.awt.Color(51, 51, 51));
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -158,25 +159,33 @@ public class Registration_form extends javax.swing.JFrame {
         );
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        String name = tName.getText();
-        String sname = tSname.getText();
-        String username = tUname.getText();
-        String num = tNumber.getText();
-        String password = tPassword.getText();
-        int balance;
+        if (!checkNull()) {
+            String name = tName.getText();
+            String sname = tSname.getText();
+            String username = tUname.getText();
+            String num = tNumber.getText();
+            String password = tPassword.getText();
+            int balance;
 
-        if (jRadioButton1.isSelected()) {
-            balance = 1000;
-        } else if (jRadioButton2.isSelected()) {
-            balance = 10000;
-        } else {
-            balance = 15000;
+            if (jRadioButton1.isSelected()) {
+                balance = 1000;
+            } else if (jRadioButton2.isSelected()) {
+                balance = 10000;
+            } else {
+                balance = 15000;
+            }
+            User newUser = new User(name, sname, username, password, num, balance);
+            addUser(newUser);
+            
+            clearTextFields();
+        }else{
+            JOptionPane.showMessageDialog(null, "Please input all the necessary information");
         }
-        User newUser = new User(name, sname, username, password, num, balance);
-        addUser(newUser);
+
 
     }//GEN-LAST:event_jButton1ActionPerformed
 
@@ -215,6 +224,22 @@ public class Registration_form extends javax.swing.JFrame {
         } finally {
             session.close();
         }
+    }
+
+    public boolean checkNull() {
+        return (tName.getText().equals("")
+                || tSname.getText().equals("")
+                || tUname.getText().equals("")
+                || tPassword.getText().equals("")
+                || tNumber.getText().equals(""));
+    }
+    public void clearTextFields(){
+        tName.setText("");
+        tSname.setText("");
+        tUname.setText("");
+        tPassword.setText("");
+        tNumber.setText("");
+        jRadioButton1.setSelected(true);
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
