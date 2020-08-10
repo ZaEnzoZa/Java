@@ -5,15 +5,15 @@
  */
 package cinema.management;
 
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author Enzo
  */
 public class Login extends javax.swing.JFrame {
-
-    /**
-     * Creates new form Login
-     */
+    
+    
     public Login() {
         initComponents();
     }
@@ -33,28 +33,33 @@ public class Login extends javax.swing.JFrame {
         edtPassword = new javax.swing.JPasswordField();
         btnLogin = new javax.swing.JButton();
         btnQuit = new javax.swing.JButton();
+        btnRegister = new javax.swing.JButton();
         lblBackground = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         setMinimumSize(new java.awt.Dimension(300, 200));
-        setPreferredSize(new java.awt.Dimension(200, 150));
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         lblUsername.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         lblUsername.setForeground(new java.awt.Color(240, 240, 240));
         lblUsername.setText("Username:");
-        getContentPane().add(lblUsername, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 20, 70, 20));
+        getContentPane().add(lblUsername, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 80, 70, 20));
 
         lblPassword.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         lblPassword.setForeground(new java.awt.Color(240, 240, 240));
         lblPassword.setText("Password:");
-        getContentPane().add(lblPassword, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 80, -1, -1));
-        getContentPane().add(edtUsername, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 20, 100, -1));
-        getContentPane().add(edtPassword, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 80, 100, -1));
+        getContentPane().add(lblPassword, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 150, -1, -1));
+        getContentPane().add(edtUsername, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 80, 100, -1));
+        getContentPane().add(edtPassword, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 150, 100, -1));
 
         btnLogin.setText("Login");
-        getContentPane().add(btnLogin, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 120, -1, -1));
+        btnLogin.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnLoginActionPerformed(evt);
+            }
+        });
+        getContentPane().add(btnLogin, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 220, -1, -1));
 
         btnQuit.setText("Quit");
         btnQuit.addActionListener(new java.awt.event.ActionListener() {
@@ -62,10 +67,13 @@ public class Login extends javax.swing.JFrame {
                 btnQuitActionPerformed(evt);
             }
         });
-        getContentPane().add(btnQuit, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 120, -1, -1));
+        getContentPane().add(btnQuit, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 220, -1, -1));
+
+        btnRegister.setText("Register");
+        getContentPane().add(btnRegister, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 220, -1, -1));
 
         lblBackground.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/Login_screen.jpg"))); // NOI18N
-        getContentPane().add(lblBackground, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 310, 190));
+        getContentPane().add(lblBackground, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 430, 290));
 
         pack();
         setLocationRelativeTo(null);
@@ -74,6 +82,28 @@ public class Login extends javax.swing.JFrame {
     private void btnQuitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnQuitActionPerformed
         System.exit(0);
     }//GEN-LAST:event_btnQuitActionPerformed
+
+    private void btnLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLoginActionPerformed
+        String username = edtUsername.getText();
+        String password = edtPassword.getText();
+        String insertDatabaseUsernameHere = "Michael";
+        String insertDatabasePasswordHere = "MichaelPassword";
+        Boolean commonLogin = false;
+        
+        //simplified version
+        
+        if (username.equals(insertDatabaseUsernameHere) && password.equals(insertDatabasePasswordHere)) {
+            commonLogin = true;
+            JOptionPane.showMessageDialog(null, commonLogin);
+        }
+        if (commonLogin == false) {
+            JOptionPane.showMessageDialog(null, "Incorrect Username or Password");
+        }
+        
+        //end 
+        
+        
+    }//GEN-LAST:event_btnLoginActionPerformed
 
     /**
      * @param args the command line arguments
@@ -113,6 +143,7 @@ public class Login extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnLogin;
     private javax.swing.JButton btnQuit;
+    private javax.swing.JButton btnRegister;
     private javax.swing.JPasswordField edtPassword;
     private javax.swing.JTextField edtUsername;
     private javax.swing.JLabel lblBackground;
