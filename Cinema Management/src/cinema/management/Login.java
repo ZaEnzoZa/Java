@@ -213,6 +213,8 @@ public class Login extends javax.swing.JFrame {
                         JOptionPane.showMessageDialog(null, "Invalid login credentials.");
                     }
                     tx.commit();
+                    MainInterface min = new MainInterface();
+                    min.setVisible(true);
         }
         
         catch (HibernateException e) {

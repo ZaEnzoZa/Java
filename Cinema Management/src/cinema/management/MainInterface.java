@@ -5,6 +5,18 @@
  */
 package cinema.management;
 
+import java.util.Iterator;
+import java.util.List;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+import org.hibernate.Criteria;
+import org.hibernate.HibernateException;
+import org.hibernate.Query;
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.hibernate.Transaction;
+import org.hibernate.cfg.Configuration;
+
 /**
  *
  * @author Aidan
@@ -14,8 +26,12 @@ public class MainInterface extends javax.swing.JFrame {
     /**
      * Creates new form MainInterface
      */
+    
+    private static SessionFactory factory;
     public MainInterface() {
         initComponents();
+        printOut();
+        printOutCustomer();
     }
 
     /**
@@ -30,12 +46,19 @@ public class MainInterface extends javax.swing.JFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         tblOutput = new javax.swing.JTable();
         jPanel1 = new javax.swing.JPanel();
-        btnSearch = new javax.swing.JButton();
-        btnUpdate = new javax.swing.JButton();
-        btnDelete = new javax.swing.JButton();
-        cmbSort = new javax.swing.JComboBox<>();
+        btnSearchBookings = new javax.swing.JButton();
+        btnUpdateBookings = new javax.swing.JButton();
+        btnDeleteBookings = new javax.swing.JButton();
+        cmbSortBookings = new javax.swing.JComboBox<>();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        tblOutput2 = new javax.swing.JTable();
+        jPanel2 = new javax.swing.JPanel();
+        btnSearchCustomer = new javax.swing.JButton();
+        btnUpdateCustomer = new javax.swing.JButton();
+        btnDeleteCustomer = new javax.swing.JButton();
+        cmbSortCustomer = new javax.swing.JComboBox<>();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         tblOutput.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -50,67 +73,207 @@ public class MainInterface extends javax.swing.JFrame {
         ));
         jScrollPane1.setViewportView(tblOutput);
 
-        btnSearch.setText("Search");
+        btnSearchBookings.setText("Search");
+        btnSearchBookings.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSearchBookingsActionPerformed(evt);
+            }
+        });
 
-        btnUpdate.setText("Update");
+        btnUpdateBookings.setText("Update");
+        btnUpdateBookings.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnUpdateBookingsActionPerformed(evt);
+            }
+        });
 
-        btnDelete.setText("Delete");
+        btnDeleteBookings.setText("Delete");
+        btnDeleteBookings.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnDeleteBookingsActionPerformed(evt);
+            }
+        });
+
+        cmbSortBookings.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Booking ID", "Customer", "Cinema", "Movie", "Seat" }));
+        cmbSortBookings.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cmbSortBookingsActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addContainerGap(40, Short.MAX_VALUE)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(btnDelete)
-                    .addComponent(btnUpdate)
-                    .addComponent(btnSearch))
-                .addGap(15, 15, 15))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(btnDeleteBookings)
+                            .addComponent(btnUpdateBookings)
+                            .addComponent(btnSearchBookings))
+                        .addGap(15, 15, 15))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addComponent(cmbSortBookings, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap())))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(27, 27, 27)
-                .addComponent(btnSearch)
+                .addComponent(btnSearchBookings)
                 .addGap(18, 18, 18)
-                .addComponent(btnUpdate)
+                .addComponent(btnUpdateBookings)
                 .addGap(18, 18, 18)
-                .addComponent(btnDelete)
-                .addContainerGap(20, Short.MAX_VALUE))
+                .addComponent(btnDeleteBookings)
+                .addGap(18, 18, 18)
+                .addComponent(cmbSortBookings, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(21, Short.MAX_VALUE))
         );
 
-        cmbSort.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        tblOutput2.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        jScrollPane2.setViewportView(tblOutput2);
+
+        btnSearchCustomer.setText("Search");
+        btnSearchCustomer.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSearchCustomerActionPerformed(evt);
+            }
+        });
+
+        btnUpdateCustomer.setText("Update");
+        btnUpdateCustomer.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnUpdateCustomerActionPerformed(evt);
+            }
+        });
+
+        btnDeleteCustomer.setText("Delete");
+        btnDeleteCustomer.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnDeleteCustomerActionPerformed(evt);
+            }
+        });
+
+        cmbSortCustomer.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Customer ID", "Name", "Surname", "Username" }));
+        cmbSortCustomer.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cmbSortCustomerActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
+        jPanel2.setLayout(jPanel2Layout);
+        jPanel2Layout.setHorizontalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addContainerGap(109, Short.MAX_VALUE)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(btnDeleteCustomer)
+                            .addComponent(btnUpdateCustomer)
+                            .addComponent(btnSearchCustomer))
+                        .addGap(15, 15, 15))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                        .addComponent(cmbSortCustomer, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap())))
+        );
+        jPanel2Layout.setVerticalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addGap(27, 27, 27)
+                .addComponent(btnSearchCustomer)
+                .addGap(18, 18, 18)
+                .addComponent(btnUpdateCustomer)
+                .addGap(18, 18, 18)
+                .addComponent(btnDeleteCustomer)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(cmbSortCustomer, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(21, Short.MAX_VALUE))
+        );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 328, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(142, 142, 142))
             .addGroup(layout.createSequentialGroup()
-                .addGap(49, 49, 49)
-                .addComponent(cmbSort, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(27, 27, 27)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 849, Short.MAX_VALUE)
+                    .addComponent(jScrollPane1))
+                .addContainerGap(52, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(70, 70, 70)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(cmbSort, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(81, Short.MAX_VALUE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 384, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(27, 27, 27)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 203, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(143, Short.MAX_VALUE))
         );
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
+
+    private void cmbSortBookingsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbSortBookingsActionPerformed
+        printOut();
+    }//GEN-LAST:event_cmbSortBookingsActionPerformed
+
+    private void btnSearchBookingsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSearchBookingsActionPerformed
+        int searchIDBooking = Integer.valueOf(JOptionPane.showInputDialog(null, "Input Booking ID", 1));
+        searchBookingID(searchIDBooking);
+    }//GEN-LAST:event_btnSearchBookingsActionPerformed
+
+    private void btnUpdateBookingsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUpdateBookingsActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnUpdateBookingsActionPerformed
+
+    private void btnDeleteBookingsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteBookingsActionPerformed
+        int deleteIDBooking = Integer.valueOf(JOptionPane.showInputDialog(null, "Input booking ID to delete", 1));
+        deleteIDBooking(deleteIDBooking);
+        printOut();
+    }//GEN-LAST:event_btnDeleteBookingsActionPerformed
+
+    private void btnSearchCustomerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSearchCustomerActionPerformed
+        int searchIDCust = Integer.valueOf(JOptionPane.showInputDialog(null, "Input customer ID", 1));
+        searchCustomerID(searchIDCust);
+    }//GEN-LAST:event_btnSearchCustomerActionPerformed
+
+    private void btnUpdateCustomerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUpdateCustomerActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnUpdateCustomerActionPerformed
+
+    private void btnDeleteCustomerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteCustomerActionPerformed
+        int deleteIDCustomer = Integer.valueOf(JOptionPane.showInputDialog(null, "Input the customer ID to delete", 1));
+        deleteIDCustomer(deleteIDCustomer);
+        printOutCustomer();
+    }//GEN-LAST:event_btnDeleteCustomerActionPerformed
+
+    private void cmbSortCustomerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbSortCustomerActionPerformed
+        printOutCustomer();
+    }//GEN-LAST:event_cmbSortCustomerActionPerformed
 
     /**
      * @param args the command line arguments
@@ -148,12 +311,325 @@ public class MainInterface extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnDelete;
-    private javax.swing.JButton btnSearch;
-    private javax.swing.JButton btnUpdate;
-    private javax.swing.JComboBox<String> cmbSort;
+    private javax.swing.JButton btnDeleteBookings;
+    private javax.swing.JButton btnDeleteCustomer;
+    private javax.swing.JButton btnSearchBookings;
+    private javax.swing.JButton btnSearchCustomer;
+    private javax.swing.JButton btnUpdateBookings;
+    private javax.swing.JButton btnUpdateCustomer;
+    private static javax.swing.JComboBox<String> cmbSortBookings;
+    private static javax.swing.JComboBox<String> cmbSortCustomer;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable tblOutput;
+    private javax.swing.JPanel jPanel2;
+    private static javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
+    private static javax.swing.JTable tblOutput;
+    private static javax.swing.JTable tblOutput2;
     // End of variables declaration//GEN-END:variables
+    
+    public static void printOut(){
+         
+        factory = new Configuration().configure().buildSessionFactory();
+         Session session = factory.openSession();
+        Transaction tx = null;
+
+        try {
+            tx = session.beginTransaction();
+
+            Criteria crit = null;
+            List stuff = null;
+            DefaultTableModel model = null;
+            model = new DefaultTableModel(new String[]{"Booking ID", "Customer ID", "Customer Name", "Customer Surname", "Movie", "Cinema", "Seat"}, 0);
+            
+                String hql = "FROM POJOS.Bookings";
+            
+                
+             switch (cmbSortBookings.getSelectedIndex()) {
+            case 0:
+                hql += " ORDER BY bookingID ASC";
+                break;
+            case 1:
+                hql += " ORDER BY customer ASC";
+                break;
+            case 2:
+                hql += " ORDER BY cinema ASC";
+                break;
+            case 3:
+                hql += " ORDER BY movie ASC";
+                break;
+            case 4:
+                hql += " ORDER BY seat ASC";
+                break;
+            default:
+                return;
+
+        }    
+             Query query = session.createQuery(hql);
+            stuff = query.list();
+                      
+            if (stuff.size() > 0) {
+
+                for (Iterator iterator = stuff.iterator(); iterator.hasNext();) {
+
+                    POJOS.Bookings list = (POJOS.Bookings) iterator.next();
+                    model.addRow(new Object[]{list.getBookingId(), list.getCustomer().getId(),list.getCustomer().getName(), list.getCustomer().getSurname(), list.getMovies().getMovieName(), list.getCinema().getName(), list.getSeat()});
+                }
+                tblOutput.setModel(model);
+
+            }
+            tx.commit();
+
+        } catch (HibernateException e) {
+            if (tx != null) {
+                tx.rollback();
+            }
+            e.printStackTrace();
+        } finally {
+            session.close();
+        }
+        
+    }
+    
+    public static void printOutCustomer(){
+         
+        factory = new Configuration().configure().buildSessionFactory();
+         Session session = factory.openSession();
+        Transaction tx = null;
+
+        try {
+            tx = session.beginTransaction();
+
+            Criteria crit = null;
+            List stuff = null;
+            DefaultTableModel model = null;
+            model = new DefaultTableModel(new String[]{"Customer ID", "Name", "Surname", "Username"}, 0);
+            
+                String hql = "FROM POJOS.Customer";
+            
+                
+             switch (cmbSortCustomer.getSelectedIndex()) {
+            case 0:
+                hql += " ORDER BY ID ASC";
+                break;
+            case 1:
+                hql += " ORDER BY Name ASC";
+                break;
+            case 2:
+                hql += " ORDER BY Surname ASC";
+                break;
+            case 3:
+                hql += " ORDER BY Username ASC";
+                break;
+            
+            default:
+                return;
+        }  
+             
+             Query query = session.createQuery(hql);
+            stuff = query.list();
+                      
+            if (stuff.size() > 0) {
+
+                for (Iterator iterator = stuff.iterator(); iterator.hasNext();) {
+
+                    POJOS.Customer list = (POJOS.Customer) iterator.next();
+                    model.addRow(new Object[]{list.getId(),list.getName(), list.getSurname(), list.getUsername()});
+                }
+                tblOutput2.setModel(model);
+
+            }
+            tx.commit();
+
+        } catch (HibernateException e) {
+            if (tx != null) {
+                tx.rollback();
+            }
+            e.printStackTrace();
+        } finally {
+            session.close();
+        }
+        
+    }
+    
+    public static void searchBookingID(int searchID){
+        factory = new Configuration().configure().buildSessionFactory();
+         Session session = factory.openSession();
+        Transaction tx = null;
+
+        try {
+            tx = session.beginTransaction();
+
+            Criteria crit = null;
+            List stuff = null;
+            DefaultTableModel model = null;
+            model = new DefaultTableModel(new String[]{"Booking ID", "Customer ID", "Customer Name", "Customer Surname", "Movie", "Cinema", "Seat"}, 0);
+            
+                String hql = "FROM POJOS.Bookings WHERE customer = " + searchID;
+            
+                
+             switch (cmbSortBookings.getSelectedIndex()) {
+            case 0:
+                hql += " ORDER BY bookingID ASC";
+                break;
+            case 1:
+                hql += " ORDER BY customer ASC";
+                break;
+            case 2:
+                hql += " ORDER BY cinema ASC";
+                break;
+            case 3:
+                hql += " ORDER BY movie ASC";
+                break;
+            case 4:
+                hql += " ORDER BY seat ASC";
+                break;
+            default:
+                return;
+
+        }    
+             Query query = session.createQuery(hql);
+            stuff = query.list();
+                      
+            if (stuff.size() > 0) {
+
+                for (Iterator iterator = stuff.iterator(); iterator.hasNext();) {
+
+                    POJOS.Bookings list = (POJOS.Bookings) iterator.next();
+                    model.addRow(new Object[]{list.getBookingId(), list.getCustomer().getId(),list.getCustomer().getName(), list.getCustomer().getSurname(), list.getMovies().getMovieName(), list.getCinema().getName(), list.getSeat()});
+                }
+                tblOutput.setModel(model);
+
+            } else {
+                JOptionPane.showMessageDialog(null, "The record could not be found.");
+            }
+            tx.commit();
+
+        } catch (HibernateException e) {
+            if (tx != null) {
+                tx.rollback();
+            }
+            e.printStackTrace();
+        } finally {
+            session.close();
+        }
+        
+    }
+    
+    public static void searchCustomerID(int searchID){
+        factory = new Configuration().configure().buildSessionFactory();
+         Session session = factory.openSession();
+        Transaction tx = null;
+
+        try {
+            tx = session.beginTransaction();
+
+            Criteria crit = null;
+            List stuff = null;
+            DefaultTableModel model = null;
+            model = new DefaultTableModel(new String[]{"Customer ID", "Name", "Surname", "Username"}, 0);
+            
+                String hql = "FROM POJOS.Customer WHERE ID = " + searchID;
+            
+                
+             switch (cmbSortBookings.getSelectedIndex()) {
+            case 0:
+                hql += " ORDER BY ID ASC";
+                break;
+            case 1:
+                hql += " ORDER BY Name ASC";
+                break;
+            case 2:
+                hql += " ORDER BY Surname ASC";
+                break;
+            case 3:
+                hql += " ORDER BY Username ASC";
+                break;
+            
+            default:
+                return;
+        }    
+             Query query = session.createQuery(hql);
+            stuff = query.list();
+                      
+            if (stuff.size() > 0) {
+
+                for (Iterator iterator = stuff.iterator(); iterator.hasNext();) {
+
+                    POJOS.Customer list = (POJOS.Customer) iterator.next();
+                    model.addRow(new Object[]{list.getId(),list.getName(), list.getSurname(), list.getUsername()});
+                }
+                tblOutput2.setModel(model);
+
+            } else {
+                JOptionPane.showMessageDialog(null, "The record could not be found.");
+            }
+            tx.commit();
+
+        } catch (HibernateException e) {
+            if (tx != null) {
+                tx.rollback();
+            }
+            e.printStackTrace();
+        } finally {
+            session.close();
+        }
+        
+    }
+    
+    public static void deleteIDCustomer(int deleteID){
+        
+    
+         try {
+        factory = new Configuration().configure().buildSessionFactory();
+                
+                Session session = factory.openSession();
+        Transaction tx = null;
+
+        try {
+            tx = session.beginTransaction();
+            POJOS.Customer del = (POJOS.Customer) session.get(POJOS.Customer.class, deleteID);
+                    session.delete(del);
+                    tx.commit();
+                } catch (HibernateException e) {
+                    if (tx != null) {
+                        tx.rollback();
+                    }
+                    e.printStackTrace();
+                } finally {
+                    session.close();
+        }} catch (Throwable ex) {
+                System.err.println("An Error has occurred");
+                throw new ExceptionInInitializerError(ex);
+            }
+    
+    
+    }
+public static void deleteIDBooking(int deleteID){
+        
+    
+         try {
+        factory = new Configuration().configure().buildSessionFactory();
+                
+                Session session = factory.openSession();
+        Transaction tx = null;
+
+        try {
+            tx = session.beginTransaction();
+            POJOS.Bookings del = (POJOS.Bookings) session.get(POJOS.Bookings.class, deleteID);
+                    session.delete(del);
+                    tx.commit();
+                } catch (HibernateException e) {
+                    if (tx != null) {
+                        tx.rollback();
+                    }
+                    e.printStackTrace();
+                } finally {
+                    session.close();
+        }} catch (Throwable ex) {
+                System.err.println("An Error has occurred");
+                throw new ExceptionInInitializerError(ex);
+            }
+    
+    
+    }
 }
