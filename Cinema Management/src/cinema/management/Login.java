@@ -5,15 +5,24 @@
  */
 package cinema.management;
 
+import java.util.Iterator;
+import java.util.List;
 import javax.swing.JOptionPane;
+import org.hibernate.Criteria;
+import org.hibernate.HibernateException;
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.hibernate.Transaction;
+import org.hibernate.cfg.Configuration;
+import org.hibernate.criterion.Restrictions;
 
 /**
  *
  * @author Enzo
  */
 public class Login extends javax.swing.JFrame {
-    
-    
+    public static int userID = 0;
+    private static SessionFactory factory;
     public Login() {
         initComponents();
     }
@@ -85,13 +94,14 @@ public class Login extends javax.swing.JFrame {
 
     private void btnLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLoginActionPerformed
         String username = edtUsername.getText();
-        String password = edtPassword.getText();
+        String password = new String(edtPassword.getPassword());
         String insertDatabaseUsernameHere = "Michael";
         String insertDatabasePasswordHere = "MichaelPassword";
         Boolean commonLogin = false;
         
         //simplified version
-        
+    
+        /*
         if (username.equals(insertDatabaseUsernameHere) && password.equals(insertDatabasePasswordHere)) {
             commonLogin = true;
             JOptionPane.showMessageDialog(null, commonLogin);
@@ -99,9 +109,10 @@ public class Login extends javax.swing.JFrame {
         if (commonLogin == false) {
             JOptionPane.showMessageDialog(null, "Incorrect Username or Password");
         }
-        
+        */
         //end 
         
+        logIn(username, password);
         
     }//GEN-LAST:event_btnLoginActionPerformed
 
@@ -150,4 +161,74 @@ public class Login extends javax.swing.JFrame {
     private javax.swing.JLabel lblPassword;
     private javax.swing.JLabel lblUsername;
     // End of variables declaration//GEN-END:variables
+
+    public static void logIn(String userNAME, String passWORD){
+        try {
+        factory = new Configuration().configure().buildSessionFactory();
+                
+                Session session = factory.openSession();
+        Transaction tx = null;
+
+        try {
+            tx = session.beginTransaction();
+
+            Criteria critCus = null;
+            Criteria critMan = null;
+            List stuff = null;
+            
+            
+        
+                    critCus = session.createCriteria(POJOS.Customer.class);
+                    critCus.add(Restrictions.eq("username", userNAME));
+                    critCus.add(Restrictions.eq("password", passWORD));
+                    
+                    stuff = critCus.list();
+                    if (stuff.size() > 0) {
+                        for (Iterator iterator = stuff.iterator(); iterator.hasNext();) {
+                            POJOS.Customer cus = (POJOS.Customer) iterator.next();
+                           userID = cus.getId(); 
+                        
+                        }
+                       
+                       JOptionPane.showMessageDialog(null, "Successful customer login.");
+                    
+                    } else {
+                        
+                        critMan = session.createCriteria(POJOS.Manager.class);
+                        critMan.add(Restrictions.eq("username", userNAME));
+                    critMan.add(Restrictions.eq("password", passWORD));
+                        
+                        stuff = critMan.list();
+                    if (stuff.size() > 0) {
+                        for (Iterator iterator = stuff.iterator(); iterator.hasNext();) {
+                            POJOS.Manager man = (POJOS.Manager) iterator.next();
+                           userID = man.getManagerId(); 
+                        
+                        }
+                       
+                       JOptionPane.showMessageDialog(null, "Successful manager login.");
+                        
+                    }}
+                    if (stuff.size() == 0) {
+                        JOptionPane.showMessageDialog(null, "Invalid login credentials.");
+                    }
+                    tx.commit();
+        }
+        
+        catch (HibernateException e) {
+            if (tx != null) {
+                tx.rollback();
+            }
+            e.printStackTrace();
+        } finally {
+            session.close();
+        }
+                
+            } catch (Throwable ex) {
+                System.err.println("An Error has occurred");
+                throw new ExceptionInInitializerError(ex);
+            }
+    }
+    
+
 }

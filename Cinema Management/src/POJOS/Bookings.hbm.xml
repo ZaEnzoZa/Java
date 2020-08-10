@@ -1,0 +1,24 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated Aug 10, 2020 11:54:03 AM by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="POJOS.Bookings" table="bookings" catalog="cinema_management" optimistic-lock="version">
+        <id name="bookingId" type="int">
+            <column name="BookingID" />
+            <generator class="assigned" />
+        </id>
+        <many-to-one name="cinema" class="POJOS.Cinema" fetch="select">
+            <column name="Cinema" length="45" not-null="true" />
+        </many-to-one>
+        <many-to-one name="customer" class="POJOS.Customer" fetch="select">
+            <column name="CustomerID" not-null="true" />
+        </many-to-one>
+        <many-to-one name="movies" class="POJOS.Movies" fetch="select">
+            <column name="Movie" length="45" not-null="true" />
+        </many-to-one>
+        <property name="seat" type="string">
+            <column name="Seat" length="45" not-null="true" />
+        </property>
+    </class>
+</hibernate-mapping>
