@@ -1,5 +1,0 @@
-BookingID: 11
-Cinema: Cinema X 4
-Customer ID: 12
-Movie: Brahms: The Boy II
-Seat: A5
