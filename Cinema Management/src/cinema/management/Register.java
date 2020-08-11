@@ -5,15 +5,27 @@
  */
 package cinema.management;
 
+import java.util.Iterator;
+import java.util.List;
+import javax.swing.JOptionPane;
+import org.hibernate.Criteria;
+import org.hibernate.HibernateException;
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.hibernate.Transaction;
+import org.hibernate.cfg.Configuration;
+import org.hibernate.criterion.Order;
+import org.hibernate.criterion.Restrictions;
+
+
 /**
  *
  * @author Enzo
  */
 public class Register extends javax.swing.JFrame {
 
-    /**
-     * Creates new form Register
-     */
+    private static SessionFactory factory;
+    
     public Register() {
         initComponents();
     }
@@ -27,25 +39,171 @@ public class Register extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        jLabel1 = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
+        jLabel4 = new javax.swing.JLabel();
+        jLabel5 = new javax.swing.JLabel();
+        edtName = new javax.swing.JTextField();
+        edtSurname = new javax.swing.JTextField();
+        edtUsername = new javax.swing.JTextField();
+        edtPassword = new javax.swing.JPasswordField();
+        jButton1 = new javax.swing.JButton();
+        jButton2 = new javax.swing.JButton();
+        jLabel6 = new javax.swing.JLabel();
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 300, Short.MAX_VALUE)
-        );
+        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jLabel1.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
+        jLabel1.setForeground(new java.awt.Color(240, 240, 240));
+        jLabel1.setText("Registartion Form");
+        getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 10, -1, -1));
+
+        jLabel2.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jLabel2.setForeground(new java.awt.Color(240, 240, 240));
+        jLabel2.setText("Name:");
+        getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 60, 50, 20));
+
+        jLabel3.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jLabel3.setForeground(new java.awt.Color(240, 240, 240));
+        jLabel3.setText("Surname:");
+        getContentPane().add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 60, -1, -1));
+
+        jLabel4.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jLabel4.setForeground(new java.awt.Color(240, 240, 240));
+        jLabel4.setText("Username:");
+        getContentPane().add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 140, -1, -1));
+
+        jLabel5.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jLabel5.setForeground(new java.awt.Color(240, 240, 240));
+        jLabel5.setText("Password:");
+        getContentPane().add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 140, -1, -1));
+        getContentPane().add(edtName, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 60, 110, -1));
+        getContentPane().add(edtSurname, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 60, 110, -1));
+        getContentPane().add(edtUsername, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 140, 110, -1));
+        getContentPane().add(edtPassword, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 140, 110, -1));
+
+        jButton1.setText("Register");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+        getContentPane().add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 210, -1, -1));
+
+        jButton2.setText("Back");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
+        getContentPane().add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 210, -1, -1));
+
+        jLabel6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/Login_screen.jpg"))); // NOI18N
+        getContentPane().add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 420, 300));
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
-    /**
-     * @param args the command line arguments
-     */
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        if (!checkNull()) {
+            String name = edtName.getText();
+            String surname = edtSurname.getText();
+            String username = edtUsername.getText();
+            String password = edtPassword.getText();
+            int id = 0;
+            
+            factory = new Configuration().configure().buildSessionFactory();
+            Session session = factory.openSession();
+            Transaction tx = null;
+            
+            try {
+                tx = session.beginTransaction();
+
+                Criteria critCus = null;
+                Criteria critMan = null;
+                List stuff = null;
+
+
+
+
+                critCus = session.createCriteria(POJOS.Customer.class);
+                stuff = critCus.list();
+                
+                for (Iterator iterator = stuff.iterator(); iterator.hasNext();) {
+
+                    POJOS.Customer list = (POJOS.Customer) iterator.next();
+                    id = list.getId();
+                }
+                tx.commit();
+                
+            } catch (HibernateException e) {
+                if (tx != null) {
+                    tx.rollback();
+                }
+                e.printStackTrace();
+            } finally {
+                session.close();
+            }
+            
+            POJOS.Customer newUser = new POJOS.Customer(id + 1, name, surname, username, password);
+            addUser(newUser);
+            
+            clearTextFields();
+        }else{
+            JOptionPane.showMessageDialog(null, "Please input all the necessary information");
+        }
+        
+        
+        
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        dispose();
+        new Login().setVisible(true);
+    }//GEN-LAST:event_jButton2ActionPerformed
+
+
+     public void addUser(POJOS.Customer myUser) {
+        try {
+            factory = new Configuration().configure().buildSessionFactory();
+        } catch (HibernateException e) {
+            System.out.println("You messed up");
+            throw new ExceptionInInitializerError(e);
+        }
+        Session session = factory.openSession();
+        Transaction tx = null;
+        Integer id = null;
+
+        try {
+            tx = session.beginTransaction();
+            id = (Integer) session.save(myUser);
+            tx.commit();
+            JOptionPane.showMessageDialog(null, "Successfully updated database");
+        } catch (HibernateException e) {
+            if (tx != null) {
+                tx.rollback();
+            }
+        } finally {
+            session.close();
+        }
+    }
+
+    public boolean checkNull() {
+        return (edtName.getText().equals("")
+                || edtSurname.getText().equals("")
+                || edtUsername.getText().equals("")
+                || edtPassword.getText().equals(""));
+    }
+    public void clearTextFields(){
+        edtName.setText("");
+        edtSurname.setText("");
+        edtUsername.setText("");
+        edtPassword.setText("");
+    }
+    
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
@@ -79,5 +237,17 @@ public class Register extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JTextField edtName;
+    private javax.swing.JPasswordField edtPassword;
+    private javax.swing.JTextField edtSurname;
+    private javax.swing.JTextField edtUsername;
+    private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton2;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
     // End of variables declaration//GEN-END:variables
 }

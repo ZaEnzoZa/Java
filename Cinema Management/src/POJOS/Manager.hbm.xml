@@ -1,0 +1,30 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated Aug 10, 2020 11:54:03 AM by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="POJOS.Manager" table="manager" catalog="cinema_management" optimistic-lock="version">
+        <id name="managerId" type="int">
+            <column name="ManagerID" />
+            <generator class="assigned" />
+        </id>
+        <property name="managerName" type="string">
+            <column name="`Manager Name`" length="45" not-null="true" />
+        </property>
+        <property name="managerNumber" type="string">
+            <column name="`Manager Number`" length="45" not-null="true" />
+        </property>
+        <property name="username" type="string">
+            <column name="Username" length="45" not-null="true" unique="true" />
+        </property>
+        <property name="password" type="string">
+            <column name="Password" length="45" not-null="true" />
+        </property>
+        <set name="cinemas" table="cinema" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="ManagerID" not-null="true" />
+            </key>
+            <one-to-many class="POJOS.Cinema" />
+        </set>
+    </class>
+</hibernate-mapping>

@@ -5,15 +5,25 @@
  */
 package cinema.management;
 
+import java.util.Iterator;
+import java.util.List;
 import javax.swing.JOptionPane;
+import org.hibernate.Criteria;
+import org.hibernate.HibernateException;
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.hibernate.Transaction;
+import org.hibernate.cfg.Configuration;
+import org.hibernate.criterion.Restrictions;
 
 /**
  *
  * @author Enzo
  */
 public class Login extends javax.swing.JFrame {
-    
-    
+    public static int userID = 0;
+    private static SessionFactory factory;
+    public static Boolean isManager = false;
     public Login() {
         initComponents();
     }
@@ -29,6 +39,7 @@ public class Login extends javax.swing.JFrame {
 
         lblUsername = new javax.swing.JLabel();
         lblPassword = new javax.swing.JLabel();
+        lblLogin = new javax.swing.JLabel();
         edtUsername = new javax.swing.JTextField();
         edtPassword = new javax.swing.JPasswordField();
         btnLogin = new javax.swing.JButton();
@@ -44,14 +55,19 @@ public class Login extends javax.swing.JFrame {
         lblUsername.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         lblUsername.setForeground(new java.awt.Color(240, 240, 240));
         lblUsername.setText("Username:");
-        getContentPane().add(lblUsername, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 80, 70, 20));
+        getContentPane().add(lblUsername, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 80, 70, 20));
 
         lblPassword.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         lblPassword.setForeground(new java.awt.Color(240, 240, 240));
         lblPassword.setText("Password:");
-        getContentPane().add(lblPassword, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 150, -1, -1));
-        getContentPane().add(edtUsername, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 80, 100, -1));
-        getContentPane().add(edtPassword, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 150, 100, -1));
+        getContentPane().add(lblPassword, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 150, -1, -1));
+
+        lblLogin.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
+        lblLogin.setForeground(new java.awt.Color(240, 240, 240));
+        lblLogin.setText("Login");
+        getContentPane().add(lblLogin, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 20, -1, -1));
+        getContentPane().add(edtUsername, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 80, 100, -1));
+        getContentPane().add(edtPassword, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 150, 100, -1));
 
         btnLogin.setText("Login");
         btnLogin.addActionListener(new java.awt.event.ActionListener() {
@@ -70,10 +86,15 @@ public class Login extends javax.swing.JFrame {
         getContentPane().add(btnQuit, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 220, -1, -1));
 
         btnRegister.setText("Register");
+        btnRegister.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnRegisterActionPerformed(evt);
+            }
+        });
         getContentPane().add(btnRegister, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 220, -1, -1));
 
         lblBackground.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/Login_screen.jpg"))); // NOI18N
-        getContentPane().add(lblBackground, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 430, 290));
+        getContentPane().add(lblBackground, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 400, 290));
 
         pack();
         setLocationRelativeTo(null);
@@ -85,25 +106,16 @@ public class Login extends javax.swing.JFrame {
 
     private void btnLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLoginActionPerformed
         String username = edtUsername.getText();
-        String password = edtPassword.getText();
-        String insertDatabaseUsernameHere = "Michael";
-        String insertDatabasePasswordHere = "MichaelPassword";
-        Boolean commonLogin = false;
+        String password = new String(edtPassword.getPassword());
         
-        //simplified version
-        
-        if (username.equals(insertDatabaseUsernameHere) && password.equals(insertDatabasePasswordHere)) {
-            commonLogin = true;
-            JOptionPane.showMessageDialog(null, commonLogin);
-        }
-        if (commonLogin == false) {
-            JOptionPane.showMessageDialog(null, "Incorrect Username or Password");
-        }
-        
-        //end 
-        
+        logIn(username, password);
         
     }//GEN-LAST:event_btnLoginActionPerformed
+
+    private void btnRegisterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegisterActionPerformed
+        dispose();
+        new Register().setVisible(true);
+    }//GEN-LAST:event_btnRegisterActionPerformed
 
     /**
      * @param args the command line arguments
@@ -147,7 +159,84 @@ public class Login extends javax.swing.JFrame {
     private javax.swing.JPasswordField edtPassword;
     private javax.swing.JTextField edtUsername;
     private javax.swing.JLabel lblBackground;
+    private javax.swing.JLabel lblLogin;
     private javax.swing.JLabel lblPassword;
     private javax.swing.JLabel lblUsername;
     // End of variables declaration//GEN-END:variables
+
+    public void logIn(String userNAME, String passWORD){
+        try {
+        factory = new Configuration().configure().buildSessionFactory();
+                
+                Session session = factory.openSession();
+        Transaction tx = null;
+
+        try {
+            tx = session.beginTransaction();
+
+            Criteria critCus = null;
+            Criteria critMan = null;
+            List stuff = null;
+            
+            
+        
+                    critCus = session.createCriteria(POJOS.Customer.class);
+                    critCus.add(Restrictions.eq("username", userNAME));
+                    critCus.add(Restrictions.eq("password", passWORD));
+                    
+                    stuff = critCus.list();
+                    if (stuff.size() > 0) {
+                        for (Iterator iterator = stuff.iterator(); iterator.hasNext();) {
+                            POJOS.Customer cus = (POJOS.Customer) iterator.next();
+                           userID = cus.getId(); 
+                        
+                        }
+                       
+                       JOptionPane.showMessageDialog(null, "Successful customer login.");
+                       isManager = false;
+                       
+                    
+                    } else {
+                        
+                        critMan = session.createCriteria(POJOS.Manager.class);
+                        critMan.add(Restrictions.eq("username", userNAME));
+                    critMan.add(Restrictions.eq("password", passWORD));
+                        
+                        stuff = critMan.list();
+                    if (stuff.size() > 0) {
+                        for (Iterator iterator = stuff.iterator(); iterator.hasNext();) {
+                            POJOS.Manager man = (POJOS.Manager) iterator.next();
+                           userID = man.getManagerId(); 
+                        
+                        }
+                       
+                       JOptionPane.showMessageDialog(null, "Successful manager login.");
+                       isManager = true;
+                        
+                    }}
+                    if (stuff.size() == 0) {
+                        JOptionPane.showMessageDialog(null, "Invalid login credentials.");
+                    }
+                    tx.commit();
+                    MainInterface min = new MainInterface();
+                    min.setVisible(true);
+                    dispose();
+        }
+        
+        catch (HibernateException e) {
+            if (tx != null) {
+                tx.rollback();
+            }
+            e.printStackTrace();
+        } finally {
+            session.close();
+        }
+                
+            } catch (Throwable ex) {
+                System.err.println("An Error has occurred");
+                throw new ExceptionInInitializerError(ex);
+            }
+    }
+    
+
 }
