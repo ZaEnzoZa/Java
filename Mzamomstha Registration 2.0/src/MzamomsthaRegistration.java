@@ -88,22 +88,22 @@ public class MzamomsthaRegistration extends javax.swing.JFrame implements Runnab
             buttonSort.setText("Sort");
             
             
-//            int n = JOptionPane.showConfirmDialog(
-//            frame,
-//            "Do you want to set a background for the Database Panel?",
-//            "Background",
-//            JOptionPane.YES_NO_OPTION);
-//            
-//            JFileChooser chooser = new JFileChooser();
-//            chooser.showOpenDialog(null);
-//            File f = chooser.getSelectedFile();
-//            String filePath = f.getAbsolutePath();
-//            JOptionPane.showMessageDialog(null, "The path you selected was: "+ filePath);
-//            JLabel image = new JLabel("", new ImageIcon(filePath), JLabel.CENTER);
-//            image.setPreferredSize(new Dimension(900, 400));
+            int n = JOptionPane.showConfirmDialog(
+            frame,
+            "Do you want to set a background for the Database Panel?",
+            "Background",
+            JOptionPane.YES_NO_OPTION);
+            
+            JFileChooser chooser = new JFileChooser();
+            chooser.showOpenDialog(null);
+            File f = chooser.getSelectedFile();
+            String filePath = f.getAbsolutePath();
+            JOptionPane.showMessageDialog(null, "The path you selected was: "+ filePath);
+            JLabel image = new JLabel("", new ImageIcon(filePath), JLabel.CENTER);
+            image.setPreferredSize(new Dimension(900, 400));
 
   
-//            JOptionPane.showMessageDialog(null, "The Backround function will be implemented at a later stage");
+            JOptionPane.showMessageDialog(null, "The Backround function will be implemented at a later stage");
 
             
             setPreferredSize(new Dimension(1000, 500));
@@ -127,9 +127,9 @@ public class MzamomsthaRegistration extends javax.swing.JFrame implements Runnab
             leftPanel.add(tenToFourteen);
             leftPanel.add(fifteenToSeventeen);
             leftPanel.add(buttonSort);
-//            add(image, BorderLayout.CENTER);
-//            revalidate(); 
-//            repaint();
+            add(image, BorderLayout.CENTER);
+            revalidate(); 
+            repaint();
             setVisible(true);
             pack();
             
